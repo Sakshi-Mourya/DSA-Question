@@ -1,0 +1,69 @@
+/*   Median of two sorted arrays of different sizes
+Example: 
+
+Input: ar1[] = {-5, 3, 6, 12, 15}
+        ar2[] = {-12, -10, -6, -3, 4, 10}
+Output : The median is 3.
+Explanation : The merged array is :
+        ar3[] = {-12, -10, -6, -5 , -3,
+                 3, 4, 6, 10, 12, 15},
+       So the median of the merged array is 3
+
+Input: ar1[] = {2, 3, 5, 8}
+        ar2[] = {10, 12, 14, 16, 18, 20}
+Output : The median is 11.
+Explanation : The merged array is :
+        ar3[] = {2, 3, 5, 8, 10, 12, 14, 16, 18, 20}
+        if the number of the elements are even, 
+        so there are two middle elements,
+        take the average between the two :
+        (10 + 12) / 2 = 11.
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+	
+int getMedian(int ar1[], int ar2[], int n, int m)
+{
+	int i = 0;
+	int j = 0; 
+	int count;
+	int m1 = -1, m2 = -1;
+	
+	for (count = 0; count <= (m + n)/2; count++)
+	{
+		
+		m2=m1;
+		if(i != n && j != m)
+		{
+			m1 = (ar1[i] > ar2[j]) ? ar2[j++] : ar1[i++];
+		}
+		else if(i < n)
+		{
+			m1 = ar1[i++];
+		}
+		
+		else
+		{
+			m1 = ar2[j++];
+		}
+	}
+	
+	if((m + n) % 2 == 1){
+		return m1;
+	}
+	else{
+		return (m1+m2)/2;
+	}
+}
+
+int main()
+{
+	int ar1[] = {900};
+	int ar2[] = {5,8,10,20};
+	int n1 = sizeof(ar1)/sizeof(ar1[0]);
+	int n2 = sizeof(ar2)/sizeof(ar2[0]);
+	cout << getMedian(ar1, ar2, n1, n2);
+}
+
+

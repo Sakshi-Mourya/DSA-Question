@@ -1,0 +1,64 @@
+/* A Program to check if strings are rotations of each other or not
+
+https://www.geeksforgeeks.org/a-program-to-check-if-strings-are-rotations-of-each-other/
+
+Given a string s1 and a string s2, write a snippet to say whether s2 is a rotation of s1? 
+(eg given s1 = ABCD and s2 = CDAB, return true, given s1 = ABCD, and s2 = ACBD , return false)
+
+Algorithm: areRotations(str1, str2)
+
+    1. Create a temp string and store concatenation of str1 to
+       str1 in temp.
+                          temp = str1.str1
+    2. If str2 is a substring of temp then str1 and str2 are 
+       rotations of each other.
+
+    Example:                 
+                     str1 = "ABACD"
+                     str2 = "CDABA"
+
+     temp = str1.str1 = "ABACDABACD"
+     Since str2 is a substring of temp, str1 and str2 are 
+     rotations of each other.
+*/
+
+#include <iostream>
+using namespace std;
+#include<vector>
+
+bool checkstring(string &s1, string &s2, int indexfound, int size){
+    for(int i=0; i<size; i++){
+        if(s1[i]!=s2[(indexfound+i)%size])
+            return false;
+    }
+    return true;
+}
+int main() {
+	string s1 = "ABCD";
+	string s2 = "CDAB";
+	
+	if(s1.length()!=s2.length()){
+	    return false;
+	}
+	else{
+	    vector<int>indexes;
+	    int size = s1.length();
+	    char firstchar=s1[0];
+	    for(int i=0; i<size; i++){
+	        if(s2[i]==firstchar){
+	            indexes.push_back(i);
+	        }
+	    }
+	    bool isRotation = false;
+	    for(int x : indexes){
+	        isRotation = checkstring(s1, s2, x, size);
+	        if(isRotation)
+	            break;
+	    }
+	    if(isRotation)
+	        return true;
+	   else
+	        return false;
+	}
+	return 0;
+}

@@ -1,0 +1,67 @@
+/*Check if the given string is shuffled substring of another string
+
+https://www.geeksforgeeks.org/check-if-the-given-string-is-shuffled-substring-of-another-string/
+
+Given strings str1 and str2. The task is to find if str1 is a substring in the shuffled form of str2 or not. Print “YES” if str1 is a substring in shuffled form of str2 else print “NO”. 
+
+Example 
+
+Input: str1 = “onetwofour”, str2 = “hellofourtwooneworld” 
+Output: YES 
+Explanation: str1 is substring in shuffled form of str2 as 
+str2 = “hello” + “fourtwoone” + “world” 
+str2 = “hello” + str1 + “world”, where str1 = “fourtwoone” (shuffled form) 
+Hence, str1 is a substring of str2 in shuffled form.
+
+Input: str1 = “roseyellow”, str2 = “yellow” 
+Output: NO 
+Explanation: As the length of str1 is greater than str2. Hence, str1 is not a substring of str2.
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isShuffledSubstring(string A, string B)
+{
+	int n = A.length();
+	int m = B.length();
+
+	if (n > m) {
+		return false;
+	}
+	else {
+		sort(A.begin(), A.end());
+
+		for (int i = 0; i < m; i++) {
+
+			if (i + n - 1 >= m)
+				return false;
+
+			string str = "";
+
+			for (int j = 0; j < n; j++)
+				str.push_back(B[i + j]);
+
+			sort(str.begin(), str.end());
+
+			if (str == A)
+				return true;
+		}
+	}
+}
+
+// Driver Code
+int main()
+{
+	string str1 = "geekforgeeks";
+	string str2 = "ekegorfkeegsgeek";
+
+	bool a = isShuffledSubstring(str1, str2);
+
+	if (a)
+		cout << "YES";
+	else
+		cout << "NO";
+	cout << endl;
+	return 0;
+}

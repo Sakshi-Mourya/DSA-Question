@@ -1,0 +1,117 @@
+Given an array of pairs, find all symmetric pairs in it
+
+Two pairs (a, b) and (c, d) are said to be symmetric if c is equal to b and a is equal to d. For example, (10, 20) and (20, 10) are symmetric. Given an array of pairs find all symmetric pairs in it. 
+It may be assumed that the first elements of all pairs are distinct.
+Example: 
+
+Input: arr[] = {{11, 20}, {30, 40}, {5, 10}, {40, 30}, {10, 5}}
+Output: Following pairs have symmetric pairs
+        (30, 40)
+        (5, 10)  
+ 
+Naive approach: The idea is to use two nested loops, one for selecting one pair and the second for searching the other symmetric pair in the given array.
+The pair are said to be symmetric if arr[i][0] == arr[j][1] and arr[i][1] == arr[j][0] satisfy.
+
+Below is the implementation of the above approach:
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+ 
+void findSymPairs(int arr[][2], int row)
+{
+    // This loop for selection of one pair
+    for (int i = 0; i < row; i++) {
+         
+      // This loop for searching of symmetric pair
+        for (int j = i + 1; j < row; j++) {
+           
+            // Condition of symmetric pair
+            if (arr[i][0] == arr[j][1]
+                and arr[i][1] == arr[j][0])
+            {
+                cout << "(" << arr[i][0] << ", "
+                     << arr[i][1] << ")" << endl;
+            }
+        }
+    }
+}
+ 
+// Driver method
+int main()
+{
+    int arr[5][2];
+    arr[0][0] = 11;
+    arr[0][1] = 20;
+    arr[1][0] = 30;
+    arr[1][1] = 40;
+    arr[2][0] = 5;
+    arr[2][1] = 10;
+    arr[3][0] = 40;
+    arr[3][1] = 30;
+    arr[4][0] = 10;
+    arr[4][1] = 5;
+    cout << "Following pairs have symmetric pairs\n";
+    findSymPairs(arr, 5);
+}
+ 
+
+Following pairs have symmetric pairs
+(30, 40)
+(5, 10)
+Time Complexity: O(n2) .
+Auxiliary Space: O(1)
+
+A Better Solution is to use sorting. Sort all pairs by the first element. For every pair, do a binary search for the second element in the given array, i.e., check if the second element of this pair exists as the first element in the array. If found, then compare the first element of the pair with the second element. The Time Complexity of this solution is O(nLogn).
+
+An Efficient Solution is to use Hashing. The first element of the pair is used as the key and the second element is used as the value. The idea is to traverse all pairs one by one. For every pair, check if its second element is in the hash table. If yes, then compare the first element with the value of the matched entry of the hash table. If the value and the first element match, then we found symmetric pairs. Else, insert the first element as a key and the second element as a value.
+
+Below is the implementation of the above approach:
+
+
+#include<bits/stdc++.h>
+using namespace std;
+ 
+// A C++ program to find all symmetric pairs in a given array of pairs
+// Print all pairs that have a symmetric counterpart
+void findSymPairs(int arr[][2], int row)
+{
+    // Creates an empty hashMap hM
+    unordered_map<int, int> hM;
+ 
+    // Traverse through the given array
+    for (int i = 0; i < row; i++)
+    {
+        // First and second elements of current pair
+        int first = arr[i][0];
+        int sec   = arr[i][1];
+ 
+        // If found and value in hash matches with first
+        // element of this pair, we found symmetry
+        if (hM.find(sec) != hM.end() && hM[sec] == first)
+            cout << "(" << sec << ", " << first << ")" <<endl;
+ 
+        else  // Else put sec element of this pair in hash
+            hM[first] = sec;
+    }
+}
+ 
+// Driver method
+int main()
+{
+    int arr[5][2];
+    arr[0][0] = 11; arr[0][1] = 20;
+    arr[1][0] = 30; arr[1][1] = 40;
+    arr[2][0] = 5;  arr[2][1] = 10;
+    arr[3][0] = 40;  arr[3][1] = 30;
+    arr[4][0] = 10;  arr[4][1] = 5;
+    cout<<"Following pairs have symmetric pairs\n";
+    findSymPairs(arr, 5);
+}
+ 
+Output
+Following pairs have symmetric pairs
+(30, 40)
+(5, 10)
+Time Complexity: O(n), where n is the size of the given array.
+Auxiliary Space: O(n)

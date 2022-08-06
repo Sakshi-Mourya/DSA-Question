@@ -1,0 +1,83 @@
+/* Encrypt the string - 1
+
+Bingu was testing all the strings he had at his place and found that most of them were prone to a vicious attack by Banju, his arch-enemy. Bingu decided to encrypt all the strings he had, by the following method. Every substring of identical letters is replaced by a single instance of that letter followed by the number of occurrences of that letter. Then, the string thus obtained is further encrypted by reversing it.
+
+Example 1:
+
+Input:
+s = "aabc"
+Output: 1c1b2a
+Explanation: aabc
+Step1: a2b1c1
+Step2: 1c1b2a
+Example 2:
+
+Input:
+s = "aaaaa"
+Output: 5a
+Explanation: aaaaa
+Step 1: a5
+Step 2: 5a
+Your Task:
+You don't need to read input or print anything.Your task is to complete the function encryptString() which takes a single argument(s) and returns the encrypted string.
+
+Expected Time Complexity: O(|s|).
+Expected Auxiliary Space: O(|s|).
+
+Constraints
+1 <= |s| <=1000
+
+|s| denotes the length of the string s
+
+Solution :
+
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+
+
+class Solution{
+    public:
+    string encryptString(string s){
+    // code here
+    
+    map<char,int> mp;
+      for(int i=0;i<s.size();i++){
+          mp[s[i]]++;
+      }
+      string temp="";
+      int count=1;
+      for(int i=0;i<s.size();i++)
+      {
+          if((s[i]==s[i+1]))
+          {
+            count++;
+          }
+          else
+          {
+              temp+=s[i]+to_string(count);
+              count=1;
+          }
+       }
+      reverse(temp.begin(),temp.end());
+      return temp;
+       }
+};
+
+//{ Driver Code Starts.
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--){
+	    string s;
+		cin>>s;
+		Solution ob;
+		string ans = ob.encryptString(s);
+		cout<<ans<<endl;
+	}
+}
+
+// } Driver Code Ends
